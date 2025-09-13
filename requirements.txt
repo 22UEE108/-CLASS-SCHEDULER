@@ -1,0 +1,8 @@
+SQLAlchemy>=1.4
+mysql-connector-python>=8.0
+python-dotenv>=1.0
+google-api-python-client>=2.0
+google-auth-httplib2>=0.1.0
+twilio>=8.0
+pytest>=7.0
+pendulum>=2.0
