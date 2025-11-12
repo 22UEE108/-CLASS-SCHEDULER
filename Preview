@@ -1,4 +1,3 @@
-
 #Following are the project files sequence-->
 email_parser_main_client(automatic client)
 user_routes.py( user client)
