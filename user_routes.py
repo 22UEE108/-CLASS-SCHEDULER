@@ -1,8 +1,8 @@
+# user_routes.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from typing import List, Dict
-from backend import AsyncSessionLocal, StudentCompanyDrive, RescheduledClass, Attendance, Student
+from backend import AsyncSessionLocal, StudentCompanyDrive, RescheduledClass, RescheduledClassStudent, Attendance, Student
 
 router = APIRouter()
 
@@ -19,7 +19,7 @@ async def get_user_dashboard(student_id: str, session: AsyncSession = Depends(ge
     """
     Returns:
         - Company drives/interviews for the student
-        - Rescheduled classes
+        - Rescheduled classes for that student
         - Attendance status (optional)
     """
     # Verify student exists
@@ -39,13 +39,18 @@ async def get_user_dashboard(student_id: str, session: AsyncSession = Depends(ge
     )
     drives = [dict(row._mapping) for row in drives_result.all()]
 
-    ##Rescheduled classes
+    ##Rescheduled classes (filtered per student)
     resched_result = await session.execute(
         select(
             RescheduledClass.subject_id,
             RescheduledClass.day,
             RescheduledClass.time,
             RescheduledClass.status
+        ).join(
+            RescheduledClassStudent,
+            RescheduledClass.reschedule_id == RescheduledClassStudent.reschedule_id
+        ).where(
+            RescheduledClassStudent.student_id == student_id
         )
     )
     reschedules = [dict(row._mapping) for row in resched_result.all()]
@@ -67,6 +72,3 @@ async def get_user_dashboard(student_id: str, session: AsyncSession = Depends(ge
         "rescheduled_classes": reschedules,
         "attendance": attendance
     }
-
-
-
