@@ -62,7 +62,12 @@ This project automates tracking and management of student interviews, company dr
 - **Priority Queue:** Students with the most new emails are processed first.  
 - **Database Efficiency:** Only inserts new or updated records; tables are indexed for quick lookups.  
 - **Notification System:** Lightweight fetch-only notifications for the user client.  
-- **Memory Management:** In-memory cache ensures duplicate emails are not reprocessed; batched operations minimize memory spikes.  
+- **Memory Management:** In-memory cache ensures duplicate emails are not reprocessed; batched operations minimize memory spikes.
+
+> **Note:** This project has been fully implemented and the code has been fixed and optimized for deployment.  
+> It is designed to run with MySQL, FastAPI, and OpenAI API keys, but it has not been deployed end-to-end.  
+> Minor environment-specific adjustments may be required.
+  
 
 
 
